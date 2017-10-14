@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.views.generic import ListView
 
-from models import Article
+from .models import Article
 
 
 class ArticleListView(ListView):
