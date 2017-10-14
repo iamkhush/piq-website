@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}News PiQ{% endblock %}
+
+{% block content %}
+{% for article in articles %}
+
+<div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--2dp">   
+	<article id="post-50" class="post-50 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized tag-blue tag-tag tag-water">
+		{% if article.image %}
+		<div class="mdl-card__media" style="background-image: url('{{article.image.url}}');height:400px; ">
+			<header>
+				<h3><a href="{{ article.get_absolute_url }}" rel="bookmark"> {{article.title}}</a></h3>
+			</header>
+		</div>
+		{% endif %}
+
+		<div class="entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
+			{{article.content|safe|truncatechars:100}}
+			<p>
+				<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" href="{{ article.get_absolute_url }}">Read More</a>
+			</p>
+		</div><!-- .entry-content -->
+
+		<footer class="entry-footer meta mdl-card__actions mdl-card--border">
+	       	<div class="entry-meta">
+				<strong class="byline"> <span class="author vcard">{{article.author}}</span></strong>
+				<span class="posted-on"><a href="{{ article.get_absolute_url }}" rel="bookmark"><time class="entry-date published updated" datetime="{{article.last_modified_on}}">{{article.last_modified_on|date:'l, j N Y'}}</time></a></span>
+			</div>
+				              
+		</footer><!-- .entry-footer -->
+	</article><!-- #post-## -->
+</div><!-- .mdl-cell -->
+
+{% endfor %}
+
+<nav class="mdlwp-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col" role="navigation">
+	{% if page_obj.has_previous %}
+	<a href="?page={{ page_obj.previous_page_number }}" class="mdlwp-nav__button">Newer
+		<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        	<i class="material-icons">arrow_backward</i>
+     	</button>
+     </a>
+	{% endif %}
+	<div class="section-spacer"></div>
+	{% if page_obj.has_next %}
+		<a href="?page={{ page_obj.next_page_number }}" class="mdlwp-nav__button">Older
+     	<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        	<i class="material-icons">arrow_forward</i>
+     	</button>
+      	</a>			
+    {% endif %}
+</nav>
+{% endblock %}
